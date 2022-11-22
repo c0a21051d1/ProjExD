@@ -33,6 +33,7 @@ def shutudai(alphabet):
 
 
 def kaitou(abs_chars):
+    #欠損の回答
     num = int(input("欠損文字はいくつあるでしょうか？："))
     if num != num_of_abs_chars:
         print("不正解です。")
