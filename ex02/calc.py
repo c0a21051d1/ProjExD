@@ -28,7 +28,7 @@ def button_click(event):
     
 # 練習１
 root = tk.Tk()
-root.geometry("380x600")
+root.geometry("370x550")
 
 # 練習４
 entry = tk.Entry(root, justify="right", width=10, font=("",40))
