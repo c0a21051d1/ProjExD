@@ -2,10 +2,14 @@ import tkinter as tk
 import tkinter.messagebox as tkm
 
 
+
 # 練習３
 def button_click(event):
     btn = event.widget
     num = btn["text"]
+
+    
+
     if num == "=":
         siki = entry.get() #数式の文字列
         res = eval(siki)
@@ -56,7 +60,7 @@ for ope in operators:
     button['bg'] = '#D3D3D3' #色をLightGreyに変更
     button['fg'] = "#0000ff" #文字色をBlueに変更    
 
-func = ["C","AC"] #一文字削除と全消去
+func = [".","AC"] #"."と全消去を追加
 r,c=4,1
 for fun in func:
     button = tk.Button(root, text=f"{fun}", width=4, height=2, font=("", 30))
