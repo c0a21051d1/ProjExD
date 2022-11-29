@@ -6,7 +6,12 @@ import tkinter.messagebox as tkm
 def button_click(event):
     btn = event.widget
     num = btn["text"]
-    tkm.showinfo("", f"{num}ボタンがクリックされました")
+    if num == "=":
+        pass
+    else: # 「=」以外のボタン字
+        #tkm.showinfo("", f"{num}ボタンがクリックされました")
+        # 練習６
+        entry.insert(tk.END, num)
 
     
 # 練習１
@@ -28,16 +33,15 @@ for num in range(9, -1, -1):
         r += 1
         c = 0
 
-#練習５
-operators = ["+","="]
+# 練習５
+operators = ["+", "="]
 for ope in operators:
     button = tk.Button(root, text=f"{ope}", width=4, height=2, font=("", 30))
     button.grid(row=r, column=c)
+    button.bind("<1>", button_click)
     c += 1
     if c%3 == 0:
         r += 1
         c = 0
-
-
 
 root.mainloop()
