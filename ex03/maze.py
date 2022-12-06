@@ -19,7 +19,6 @@ def key_up(event):
     global key
     key = ""
 
-
 def main_proc():
     global cx, cy,mx,my
     if key == "Up"   or key == "w" :  #上矢印キーか"w"が押されたら
