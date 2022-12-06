@@ -13,16 +13,21 @@ def key_up(event):
 
 def main_proc():
     global cx, cy,mx,my
-    if key == "Up":    my -= 1
-    if key == "Down":  my += 1
-    if key == "Left":  mx -= 1
-    if key == "Right": mx += 1
+    if key == "Up"   or key == "w" :  #上矢印キーか"w"が押されたら
+        my -= 1        
+    if key == "Down" or key == "s" :  #下矢印キーか"s"が押されたら
+        my += 1
+    if key == "Left" or key == "a" :  #左矢印キーか"a"が押されたら
+        mx -= 1
+    if key == "Right"or key == "d" :  #右矢印キーか"d"が押されたら
+        mx += 1
 
     if maze_lst[mx][my] ==1:     #移動先が壁だったら
-        if key == "Up":    my += 1
-        if key == "Down":  my -= 1
-        if key == "Left":  mx += 1
-        if key == "Right": mx -= 1
+        if key == "Up"   or key == "w" : my += 1
+        if key == "Down" or key == "s" : my -= 1
+        if key == "Left" or key == "a" : mx += 1
+        if key == "Right"or key == "d" : mx -= 1
+
 
     cx, cy = mx*100+50, my*100+50
     canvas.coords("kokaton", cx, cy)
