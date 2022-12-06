@@ -1,10 +1,22 @@
 import tkinter as tk
 import maze_maker as mm
 
-def key_down(event):
-    global key
-    key = event.keysym
 
+def count_up():
+    global tmr,jid
+    label["text"] = tmr
+    tmr = tmr+1
+    jid = root.after(1000,count_up)
+
+def key_down(event):
+    global key,jid
+    
+    key = event.keysym
+    if jid is not None:
+        root.after_cancel(jid)
+        jid = None
+    else:
+        jid = root.after(1000,count_up)
 
 def key_up(event):
     global key
@@ -28,6 +40,11 @@ def main_proc():
         if key == "Left" or key == "a" : mx += 1
         if key == "Right"or key == "d" : mx -= 1
 
+    if key == "r":
+        cx,cy = mx*100+50,my*100+50
+
+    
+
 
     cx, cy = mx*100+50, my*100+50
     canvas.coords("kokaton", cx, cy)
@@ -37,8 +54,15 @@ def main_proc():
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("迷えるこうかとん")
+    
+    tmr = 0
+    jid = None
     canvas = tk.Canvas(root, width=1500, height=900, bg="black")
     canvas.pack()
+    label = tk.Label(root,text="-",font=("",80))
+    label.pack()
+
+    
 
     maze_lst = mm.make_maze(15, 9)
     # print(maze_lst)
@@ -50,6 +74,8 @@ if __name__ == "__main__":
     canvas.create_image(cx, cy, image=tori, tag="kokaton")
     key = ""
     root.bind("<KeyPress>", key_down)
+
+    
     root.bind("<KeyRelease>", key_up)
     main_proc()
     root.mainloop()
