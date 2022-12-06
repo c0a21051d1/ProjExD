@@ -1,22 +1,19 @@
 import tkinter as tk
+
 import maze_maker as mm
 
 
-def count_up():
+def count_up():         #タイマー
     global tmr,jid
     label["text"] = tmr
     tmr = tmr+1
     jid = root.after(1000,count_up)
 
 def key_down(event):
-    global key,jid
+    global key
     
     key = event.keysym
-    if jid is not None:
-        root.after_cancel(jid)
-        jid = None
-    else:
-        jid = root.after(1000,count_up)
+    
 
 def key_up(event):
     global key
@@ -43,6 +40,10 @@ def main_proc():
     if key == "r":
         cx,cy = mx*100+50,my*100+50
 
+    if mx == 13 and my == 8:
+        tk.showinfo("","ゴールしました")
+        return
+
     
 
 
@@ -62,7 +63,8 @@ if __name__ == "__main__":
     label = tk.Label(root,text="-",font=("",80))
     label.pack()
 
-    
+    tmr = 0
+    count_up()
 
     maze_lst = mm.make_maze(15, 9)
     # print(maze_lst)
