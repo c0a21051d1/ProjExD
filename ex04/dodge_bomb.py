@@ -38,7 +38,7 @@ def main():
     pg.init()
     font = pg.font.Font(None,300)
 
-    a=0
+
 
     clock =pg.time.Clock()
     # 練習１
