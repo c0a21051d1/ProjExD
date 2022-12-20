@@ -1,6 +1,9 @@
 import pygame as pg
 import random
 import sys
+import os
+import time
+
 
 
 class Screen:
@@ -17,11 +20,13 @@ class Screen:
 
 class Bird:
     key_delta = {
-        pg.K_UP:    [0, -1],
-        pg.K_DOWN:  [0, +1],
-        pg.K_LEFT:  [-1, 0],
-        pg.K_RIGHT: [+1, 0],
+        pg.K_UP:    [0, -2],
+        pg.K_DOWN:  [0, +2],
+        pg.K_LEFT:  [-2, 0],
+        pg.K_RIGHT: [+2, 0],
     }
+    
+
 
     def __init__(self, img_path, ratio, xy):
         self.sfc = pg.image.load(img_path)
@@ -78,10 +83,23 @@ def check_bound(obj_rct, scr_rct):
         tate = -1
     return yoko, tate
 
+main_dir = os.path.split(os.path.abspath(__file__))[0]
+
+def load_sound(file):
+    """because pygame can be be compiled without mixer."""
+    if not pg.mixer:
+        return None
+    file = os.path.join(main_dir, "data", file)
+    try:
+        sound = pg.mixer.Sound(file)
+        return sound
+    except pg.error:
+        print("Warning, unable to load, %s" % file)
+    return None
 
 def main():
     clock =pg.time.Clock()
-
+    
     # 練習１
     scr = Screen("逃げろ！こうかとん", (1600,900), "fig/pg_bg.jpg")
 
@@ -96,8 +114,16 @@ def main():
         color = colors[i]
         vx=  random.choice([-1,+1])
         vy = random.choice([-1,+1])
-        bkd_lst.append(Bomb(color,10,(vx,vy),scr))
+        sk = random.randint(10,40)
+        bkd = Bomb(color,sk,(vx,vy),scr)
+        bkd_lst.append(bkd)
         #bkd.update(scr)
+
+    if pg.mixer:
+        music = os.path.join(main_dir, "data", "house_lo.wav")
+        pg.mixer.music.load(music)
+        pg.mixer.music.play(-1)
+
 
     # 練習２
     while True:        
@@ -108,14 +134,16 @@ def main():
                 return
 
         kkt.update(scr)
-        for bomb in bkd_lst:
-            bomb.update(scr)
-        if kkt.rct.colliderect(bomb.rct):
+
+        for i in range(5):
+            bkd_lst[i].update(scr)
+        if kkt.rct.colliderect(bkd_lst[i].rct):
             return
 
         pg.display.update()
         clock.tick(1000)
 
+    
 
 if __name__ == "__main__":
     pg.init()
